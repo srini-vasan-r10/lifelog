@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4caf50">
+    <title>Consistency Engine</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div id="auth-screen" class="screen active">
+        <div class="auth-container">
+            <h1>Consistency</h1>
+            <p>Focus. Build. Repeat.</p>
+            <input type="password" id="passcode-input" pattern="[0-9]*" inputmode="numeric" placeholder="Enter Passcode" maxlength="4">
+            <button id="login-btn">Unlock</button>
+            <p class="hint">Default: 1234</p>
+        </div>
+    </div>
+
+    <div id="app-container" class="hidden">
+        <header>
+            <div id="header-title">Consistency</div>
+            <div id="sync-status" class="status-indicator" title="Sync Status">●</div>
+        </header>
+
+        <main id="content-area">
+            
+            <div id="view-tracker" class="view active-view">
+                <div id="date-navigator">
+                    <button id="prev-day">←</button>
+                    <span id="current-date-display">Today</span>
+                    <button id="next-day">→</button>
+                </div>
+
+                <div id="mood-section">
+                    <div class="mood-selector">
+                        <span data-val="1">😫</span>
+                        <span data-val="2">😕</span>
+                        <span data-val="3">😐</span>
+                        <span data-val="4">🙂</span>
+                        <span data-val="5">🤩</span>
+                    </div>
+                </div>
+                
+                <div id="habits-list">
+                    </div>
+            </div>
+
+            <div id="view-analytics" class="view">
+                <h2>Consistency Map</h2>
+                <div id="heatmap-grid"></div>
+                
+                <h2>Weekly Trend</h2>
+                <div class="chart-container">
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+            </div>
+
+            <div id="view-settings" class="view">
+                <h2>Settings</h2>
+                <div class="setting-item">
+                    <span>Dark Mode</span>
+                    <button id="toggle-theme">Toggle</button>
+                </div>
+                <div class="setting-item">
+                    <span>Export Data</span>
+                    <button id="export-data">CSV</button>
+                </div>
+                
+                <h3>Manage Habits</h3>
+                <ul id="manage-habit-list"></ul>
+                <div class="add-habit-box">
+                    <input type="text" id="new-habit-name" placeholder="New Habit Name">
+                    <button id="add-habit-btn">+</button>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-target="view-tracker">
+                <span class="icon">📝</span> Track
+            </button>
+            <button class="nav-btn" data-target="view-analytics">
+                <span class="icon">📊</span> Stats
+            </button>
+            <button class="nav-btn" data-target="view-settings">
+                <span class="icon">⚙️</span> Settings
+            </button>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+            .then(() => console.log('SW Registered'))
+            .catch(err => console.log('SW Fail', err));
+        }
+    </script>
+</body>
+</html>
